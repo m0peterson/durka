@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Дурка. Приёмный покой</title>
+  <meta name="description" content="Кидай скрины переписки, главврач решит, кого пора госпитализировать.">
+  <meta property="og:title" content="Дурка. Приёмный покой">
+  <meta property="og:description" content="Кидай скрины переписки, главврач решит, кого пора госпитализировать.">
+  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161816" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="wall">
+  <header class="masthead">
+    <p class="institution">Психоневрологический диспансер № 6 · Приёмный покой</p>
+    <h1>Дурка</h1>
+    <p class="lead">Кидай скрины переписки. Главврач прочитает, поставит диагноз и решит, кого из участников пора госпитализировать.</p>
+  </header>
+  </div>
+
+  <main>
+    <form id="intake" class="sheet" novalidate>
+      <div class="sheet-head">
+        <span>Форма № 001-Д</span>
+        <span>Направление на экспертизу</span>
+      </div>
+
+      <div id="drop" class="drop" tabindex="0" role="button" aria-describedby="drop-hint">
+        <svg class="drop-icon" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="7" y="9" width="34" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M7 32l10-10 8 8 6-6 10 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="32" cy="18" r="3.5" fill="currentColor"/>
+        </svg>
+        <p class="drop-title">Перетащи скрины сюда</p>
+        <p id="drop-hint" class="drop-hint">или вставь из буфера (Ctrl+V), или нажми, чтобы выбрать файлы</p>
+      </div>
+      <input id="file" type="file" accept="image/*" multiple hidden>
+      <div class="drop-actions">
+        <button type="button" id="paste" class="link-btn" hidden>Вставить из буфера</button>
+      </div>
+
+      <ul id="thumbs" class="thumbs" aria-label="Загруженные скрины"></ul>
+      <p id="parts" class="parts" hidden></p>
+
+      <label class="field">
+        <span class="field-label">Кого проверяем</span>
+        <input id="target" type="text" maxlength="100" autocomplete="off" placeholder="Серёга / тот, что слева / оставь пустым, проверим всех">
+      </label>
+
+      <label class="field">
+        <span class="field-label">Анамнез <em>(необязательно)</em></span>
+        <textarea id="context" rows="2" maxlength="600" placeholder="О чём спор, кто эти люди, что было до скрина"></textarea>
+      </label>
+
+      <label class="field" id="code-wrap" hidden>
+        <span class="field-label">Код доступа</span>
+        <input id="code" type="password" maxlength="100" autocomplete="current-password" placeholder="Спроси у того, кто дал ссылку">
+      </label>
+
+      <p id="form-error" class="form-error" role="alert" hidden></p>
+
+      <button id="go" type="submit" class="primary" disabled>Поставить диагноз</button>
+    </form>
+
+    <section id="progress" class="sheet progress" hidden aria-live="polite">
+      <div class="pulse" aria-hidden="true">
+        <svg viewBox="0 0 120 32"><path class="trace" d="M0 16h34l6-12 8 24 8-20 6 8h58" pathLength="100"/><path class="beam" d="M0 16h34l6-12 8 24 8-20 6 8h58" pathLength="100"/></svg>
+      </div>
+      <p id="stage" class="stage">Регистрируем пациента</p>
+      <p id="quip" class="quip"></p>
+      <p class="timer"><span id="elapsed">0:00</span> · карта <span id="card-no">…</span></p>
+      <p class="hint">На максимальном усердии врач думает от десятков секунд до нескольких минут. Страницу можно обновить, осмотр не потеряется.</p>
+    </section>
+
+    <section id="result" class="result" hidden aria-live="polite"></section>
+  </main>
+
+  <footer class="footer">
+    <p>Это шутка и пародия, а не медицинское заключение. Скрины уходят на анализ нейросети и удаляются в течение суток.</p>
+  </footer>
+</body>
+</html>
