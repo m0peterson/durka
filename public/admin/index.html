@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Дурка. Ординаторская</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/admin/admin.js" defer></script>
+</head>
+<body>
+  <div class="wall">
+  <header class="masthead">
+    <p class="institution">Посторонним вход воспрещён</p>
+    <h1 class="h1-long">Ординаторская</h1>
+    <p class="lead">Ключи API, цепочка моделей и лимиты. Ключи хранятся на сервере и в браузер не возвращаются, видно только маску.</p>
+  </header>
+  </div>
+
+  <main>
+    <form id="login" class="sheet" novalidate>
+      <label class="field">
+        <span class="field-label">Пароль главврача</span>
+        <input id="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p id="login-error" class="form-error" role="alert" hidden></p>
+      <button type="submit" class="primary">Войти</button>
+    </form>
+
+    <div id="panel" class="admin-grid" hidden>
+      <section class="sheet">
+        <h2>Ключи API</h2>
+        <p class="note">Ключ из админки перекрывает переменную окружения. Самый надёжный вариант: переменная окружения в Netlify, тогда здесь можно ничего не вводить.</p>
+        <div id="keys"></div>
+      </section>
+
+      <section class="sheet">
+        <h2>Цепочка врачей</h2>
+        <p class="note">Идут по порядку. Если первый упал или не ответил, зовётся следующий. Провайдеры без ключа пропускаются. Модель обязана понимать картинки. Кнопка «Тест» проверяет ключ, имя модели и effort (без картинки).</p>
+        <ol id="chain" class="chain"></ol>
+        <p><button type="button" id="add" class="secondary">+ Добавить врача</button></p>
+        <label class="field">
+          <span class="field-label">Адрес своего OpenAI-совместимого провайдера</span>
+          <input id="custom-url" type="url" placeholder="https://api.example.com/v1" autocomplete="off">
+        </label>
+        <p class="note">При смене адреса ключ «Свой» стирается, чтобы старый ключ не ушёл на новый сервер.</p>
+      </section>
+
+      <section class="sheet">
+        <h2>Доступ и лимиты</h2>
+        <label class="field">
+          <span class="field-label">Код доступа для пользователей</span>
+          <input id="access-code" type="text" maxlength="100" autocomplete="off" placeholder="Пусто: вход свободный">
+        </label>
+        <p id="access-note" class="note" hidden></p>
+        <div class="row2">
+          <label class="field">
+            <span class="field-label">Лимит анализов в сутки (0: без лимита)</span>
+            <input id="daily-limit" type="number" min="0" max="100000" step="1">
+          </label>
+          <label class="field">
+            <span class="field-label">Таймаут одного врача, сек</span>
+            <input id="timeout" type="number" min="30" max="840" step="10">
+          </label>
+        </div>
+        <p id="usage" class="note"></p>
+      </section>
+
+      <div class="actions">
+        <button type="button" id="save" class="primary">Сохранить настройки</button>
+        <button type="button" id="logout" class="secondary">Выйти</button>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
